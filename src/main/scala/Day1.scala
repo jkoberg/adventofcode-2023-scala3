@@ -44,28 +44,33 @@ In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Addi
 What is the sum of all of the calibration values?
 */
 
+val digits = Map(
+  "1" -> 1,
+  "2" -> 2,
+  "3" -> 3,
+  "4" -> 4,
+  "5" -> 5,
+  "6" -> 6,
+  "7" -> 7,
+  "8" -> 8,
+  "9" -> 9,
+  "one" -> 1,
+  "two" -> 2,
+  "three" -> 3,
+  "four" -> 4,
+  "five" -> 5,
+  "six" -> 6,
+  "seven" -> 7,
+  "eight" -> 8,
+  "nine" -> 9,
+)
 
 def matchDigitAtStart(s:String) =
-  s match
-    case s"1${any}"     => Some(1)
-    case s"one${any}"   => Some(1)
-    case s"2${any}"     => Some(2)
-    case s"two${any}"   => Some(2)
-    case s"3${any}"     => Some(3)
-    case s"three${any}" => Some(3)
-    case s"4${any}"     => Some(4)
-    case s"four${any}"  => Some(4)
-    case s"5${any}"     => Some(5)
-    case s"five${any}"  => Some(5)
-    case s"6${any}"     => Some(6)
-    case s"six${any}"   => Some(6)
-    case s"7${any}"     => Some(7)
-    case s"seven${any}" => Some(7)
-    case s"8${any}"     => Some(8)
-    case s"eight${any}" => Some(8)
-    case s"9${any}"     => Some(9)
-    case s"nine${any}"  => Some(9)
-    case _              => None
+  for
+    (text, value) <- digits
+    if s.startsWith(text)
+  yield
+    value
 
 
 def scanForDigits(s:String) =
