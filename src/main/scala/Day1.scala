@@ -88,18 +88,30 @@ def part2(input: Iterator[String]) =
   calibrationFactors.sum
 
 
+case class TestCase(input:String, expected:Int)
+
+
+def test(testcase:TestCase, f: Iterator[String] => Int): Unit =
+  val actual = f(testcase.input.linesIterator)
+  if(actual == testcase.expected)
+    println(s"passed. value $actual")
+  else
+    println(s"FAILED! expected ${testcase.expected}, got $actual")
+
+
+
 @main
-def test(): Unit =
-  val part1testinput = """
+def runTests(): Unit =
+  val part1case = TestCase("""
       1abc2
       pqr3stu8vwx
       a1b2c3d4e5f
       treb7uchet
-    """
+    """, 142)
 
-  println(s"Part 1 Test: ${part1(part1testinput.linesIterator)}")
+  test(part1case, part1)
 
-  val part2testinput = """\
+  val part2case = TestCase("""
       two1nine
       eightwothree
       abcone2threexyz
@@ -107,9 +119,9 @@ def test(): Unit =
       4nineeightseven2
       zoneight234
       7pqrstsixteen
-    """
+    """, 281)
 
-  println(s"Part 2 Test: ${part2(part2testinput.linesIterator)}")
+  test(part2case, part2)
 
 
 
