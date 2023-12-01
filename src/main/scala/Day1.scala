@@ -21,7 +21,7 @@ Consider your entire calibration document. What is the sum of all of the calibra
 def part1(input: Iterator[String]) =
   input
     .filter(_.trim.nonEmpty)
-    .map(l => l.filter(c => c.isDigit))
+    .map(_.filter(_.isDigit))
     .map(cs => cs.head.asDigit * 10 + cs.last.asDigit)
     .sum
 
@@ -44,7 +44,7 @@ In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Addi
 What is the sum of all of the calibration values?
 */
 
-val digits = Map(
+val digitRepresentations = Map(
   "1" -> 1,
   "2" -> 2,
   "3" -> 3,
@@ -65,19 +65,15 @@ val digits = Map(
   "nine" -> 9,
 )
 
-def matchDigitAtStart(s:String) =
-  for
-    (text, value) <- digits
-    if s.startsWith(text)
-  yield
-    value
-
+val maxDigitLen = digitRepresentations.keys.map(_.length).max
 
 def scanForDigits(s:String) =
   for
     index <- 0 until s.length
-    tail = s.slice(index, s.length)
-    digit <- matchDigitAtStart(tail)
+    tail = s.slice(index, index + maxDigitLen)
+    digit <- digitRepresentations.collectFirst {
+      case (text, value) if tail.startsWith(text) => value
+    }
   yield
     digit
 
@@ -93,30 +89,26 @@ def part2(input: Iterator[String]) =
   calibrationFactors.sum
 
 
-case class TestCase(input:String, expected:Int)
 
-
-def test(testcase:TestCase, f: Iterator[String] => Int): Unit =
-  val actual = f(testcase.input.linesIterator)
-  if(actual == testcase.expected)
-    println(s"passed. value $actual")
-  else
-    println(s"FAILED! expected ${testcase.expected}, got $actual")
-
+case class TestCase(fn: Iterator[String] => Int, expected:Int, input:String):
+  def run(): Unit =
+    val actual = fn(input.linesIterator)
+    if (actual == expected)
+      println(s"passed. value $actual")
+    else
+      println(s"FAILED! expected $expected, got $actual")
 
 
 @main
 def runTests(): Unit =
-  val part1case = TestCase("""
+  val cases = Seq(
+    TestCase(part1, 142, """
       1abc2
       pqr3stu8vwx
       a1b2c3d4e5f
       treb7uchet
-    """, 142)
-
-  test(part1case, part1)
-
-  val part2case = TestCase("""
+    """),
+    TestCase(part2, 281, """
       two1nine
       eightwothree
       abcone2threexyz
@@ -124,10 +116,13 @@ def runTests(): Unit =
       4nineeightseven2
       zoneight234
       7pqrstsixteen
-    """, 281)
+    """)
+  )
 
-  test(part2case, part2)
-
+  for
+    c <- cases
+  do
+    c.run()
 
 
 @main
