@@ -22,7 +22,7 @@ def part1(input: Iterator[String]) =
   input
     .filter(_.trim.nonEmpty)
     .map(_.filter(_.isDigit))
-    .map(cs => cs.head.asDigit * 10 + cs.last.asDigit)
+    .map(cs => 10 * cs.head.asDigit + cs.last.asDigit)
     .sum
 
 
@@ -70,12 +70,12 @@ val maxDigitLen = digitRepresentations.keys.map(_.length).max
 def scanForDigits(s:String) =
   for
     index <- 0 until s.length
-    tail = s.slice(index, index + maxDigitLen)
-    digit <- digitRepresentations.collectFirst {
-      case (text, value) if tail.startsWith(text) => value
+    substring = s.slice(index, index + maxDigitLen)
+    digitValue <- digitRepresentations.collectFirst {
+      case (text, value) if substring.startsWith(text) => value
     }
   yield
-    digit
+    digitValue
 
 
 def part2(input: Iterator[String]) =
@@ -85,12 +85,16 @@ def part2(input: Iterator[String]) =
       digitsForLine = scanForDigits(line)
       if digitsForLine.nonEmpty
     yield
-      digitsForLine.head * 10 + digitsForLine.last
+      10 * digitsForLine.head + digitsForLine.last
   calibrationFactors.sum
 
 
 
-case class TestCase(fn: Iterator[String] => Int, expected:Int, input:String):
+case class TestCase(
+  fn: Iterator[String] => Int,
+  expected: Int,
+  input: String
+):
   def run(): Unit =
     val actual = fn(input.linesIterator)
     if (actual == expected)
@@ -99,16 +103,17 @@ case class TestCase(fn: Iterator[String] => Int, expected:Int, input:String):
       println(s"FAILED! expected $expected, got $actual")
 
 
-@main
-def runTests(): Unit =
-  val cases = Seq(
-    TestCase(part1, 142, """
+val testCases = Seq(
+  TestCase(part1, 142,
+    """
       1abc2
       pqr3stu8vwx
       a1b2c3d4e5f
       treb7uchet
     """),
-    TestCase(part2, 281, """
+
+  TestCase(part2, 281,
+    """
       two1nine
       eightwothree
       abcone2threexyz
@@ -119,10 +124,10 @@ def runTests(): Unit =
     """)
   )
 
-  for
-    c <- cases
-  do
-    c.run()
+
+@main
+def runTests(): Unit =
+  testCases.foreach(_.run())
 
 
 @main
