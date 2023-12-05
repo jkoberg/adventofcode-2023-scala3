@@ -89,9 +89,9 @@ humidity-to-location map:
 56 93 4
 """
 
-  val testCases: Seq[TestCommon[Any]] = Seq(
-    LongCase(part1, 35, testCaseInput),
-    LongCase(part2, 46, testCaseInput)
+  val testCases: Seq[TestCase[_]] = Seq(
+    TestCase[Long](part1, 35, testCaseInput),
+    TestCase[Long](part2, 46, testCaseInput)
   )
 
   @main

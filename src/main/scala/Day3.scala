@@ -138,9 +138,9 @@ object Day3:
 .664.598..
 """
 
-  val testCases: Seq[TestCase] = Seq(
-    TestCase(part1, 4361, testCaseInput),
-    TestCase(part2, 467835, testCaseInput)
+  val testCases: Seq[TestCase[_]] = Seq(
+    TestCase[Int](part1, 4361, testCaseInput),
+    TestCase[Int](part2, 467835, testCaseInput)
   )
 
   @main

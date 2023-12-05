@@ -104,9 +104,9 @@ Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
 Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
 """
 
-  val testCases: Seq[TestCase] = Seq(
-    TestCase(part1, 8, testCaseInput),
-    TestCase(part2, 2286, testCaseInput)
+  val testCases: Seq[TestCase[_]] = Seq(
+    TestCase[Int](part1, 8, testCaseInput),
+    TestCase[Int](part2, 2286, testCaseInput)
   )
 
   @main

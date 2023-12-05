@@ -90,8 +90,8 @@ object Day1:
     calibrationFactors.sum
 
 
-  val testCases: Seq[TestCase] = Seq(
-    TestCase(part1, 142,
+  val testCases: Seq[TestCase[_]] = Seq(
+    TestCase[Int](part1, 142,
       """
         1abc2
         pqr3stu8vwx
@@ -99,7 +99,7 @@ object Day1:
         treb7uchet
       """),
 
-    TestCase(part2, 281,
+    TestCase[Int](part2, 281,
       """
         two1nine
         eightwothree

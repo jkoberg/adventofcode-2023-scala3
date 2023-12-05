@@ -64,9 +64,9 @@ Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
 Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
 """
 
-  val testCases: Seq[TestCase] = Seq(
-    TestCase(part1, 13, testCaseInput),
-    TestCase(part2, 30, testCaseInput)
+  val testCases: Seq[TestCase[_]] = Seq(
+    TestCase[Int](part1, 13, testCaseInput),
+    TestCase[Int](part2, 30, testCaseInput)
   )
 
   @main

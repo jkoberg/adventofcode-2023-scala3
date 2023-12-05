@@ -7,10 +7,11 @@ def readInput(day:Int): Iterator[String] =
   Source.fromResource(s"day${day}input.txt").getLines()
 
 
-case class TestCase( fn: Iterator[String] => Int,
-                     expected: Int,
-                     input: String
-                   ):
+case class TestCase[A](
+    fn: Iterator[String] => A,
+    expected: A,
+    input: String
+  ):
   def run(): Unit =
     val actual = fn(input.linesIterator)
     if (actual == expected)
