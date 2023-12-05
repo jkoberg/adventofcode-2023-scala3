@@ -119,5 +119,5 @@ object Day1:
 
   @main
   def main(): Unit =
-    println(s"Part 1: ${part1(Source.fromResource("day1input.txt").getLines())}")
-    println(s"Part 2: ${part2(Source.fromResource("day1input.txt").getLines())}")
+    println(s"Part 1: ${part1(readInput(1))}")
+    println(s"Part 2: ${part2(readInput(1))}")

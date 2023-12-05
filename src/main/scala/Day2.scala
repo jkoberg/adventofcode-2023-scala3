@@ -1,7 +1,5 @@
 package us.jkk.aoc2023
 
-import scala.io.Source
-
 object Day2:
   /*
   To get information, once a bag has been loaded with cubes, the Elf will reach into the bag,
@@ -42,20 +40,15 @@ object Day2:
         .toMap
     Draw(drawData.getOrElse("red", 0), drawData.getOrElse("blue", 0), drawData.getOrElse("green", 0))
 
-  def parseGameLine(s:String): Option[Game] =
-    s match
+
+  def parseInput(input:Iterator[String]): Iterator[Game] =
+    input.flatMap {
       case s"Game ${idText}: ${allDrawsText}" =>
         val draws = allDrawsText.split(";").map(parseDraw)
         Some(Game(idText.toInt, draws))
-      case _ => None
-
-  def parseInput(input:Iterator[String]): Iterator[Game] =
-    for
-      line <- input
-      game <- parseGameLine(line)
-    yield
-      game
-
+      case _ =>
+        None
+    }
 
   def part1(input: Iterator[String]): Int =
     val validGameIds =
@@ -121,6 +114,6 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
 
   @main
   def runDay2Input(): Unit =
-    println(s"Day 2 Part 1: ${part1(Source.fromResource("day2input.txt").getLines())}")
-    println(s"Day 2 Part 2: ${part2(Source.fromResource("day2input.txt").getLines())}")
+    println(s"Day 2 Part 1: ${part1(readInput(2))}")
+    println(s"Day 2 Part 2: ${part2(readInput(2))}")
 
